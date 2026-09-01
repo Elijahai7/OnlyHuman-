@@ -56,7 +56,7 @@ type Product = {
   relatedProductSlugs: string[];
   isiSlug: string;               // links to ImportantSafetyInfo
   fdaStatus: "not-fda-approved-as-compounded" | "fda-approved-reference-brand" | "supplement-not-fda-evaluated";
-  ctaTreatmentSlug: string;      // maps to {TELEHEALTH_BASE_URL}/start/{slug}
+  treatmentRouteKey: string;     // key into TREATMENT_ROUTES in config/treatments.ts
 };
 
 type ImportantSafetyInfo = {
@@ -92,6 +92,8 @@ components/
 
 `Accordion` and `Button` are the two primitives reused across the entire site (FAQ, mobile nav, product sections; every CTA), matching the parity checklist's "one primitive, reused everywhere" principle — build these first and get them fully accessible before building anything that consumes them.
 
+**CTA resolution:** no component resolves a telehealth or portal URL itself. `Button`'s CTA variants accept a `treatmentSlug` (or nothing, for the portal-login link) and resolve the actual destination by looking it up in `config/treatments.ts` (`TREATMENT_ROUTES`, `PORTAL_LOGIN_URL`) at render time. While a route's `telehealthUrlConfigured` is `false` (the shipped default), the CTA renders a visibly-disabled/"Coming soon" state rather than linking to `null` — this is what lets every product/category page be built and reviewed in full before a single real intake URL exists.
+
 ## 5. Accessibility (build-time requirements, not a post-hoc audit)
 - Semantic landmarks: `<header>`, `<nav>`, `<main>`, `<footer>` in every layout.
 - Accordion: real `<button aria-expanded aria-controls>` + `id`d panel, keyboard-operable (Enter/Space), visible focus ring (not suppressed).
@@ -110,11 +112,9 @@ components/
 
 ## 7. Environment/config
 ```
-NEXT_PUBLIC_TELEHEALTH_BASE_URL=   # e.g. https://app.onlyhuman.com/start
-NEXT_PUBLIC_PORTAL_BASE_URL=       # e.g. https://portal.onlyhuman.com/login
 NEXT_PUBLIC_SITE_URL=              # canonical production URL, used for metadata/sitemap
 ```
-No secrets, no database credentials, no payment keys — this app never talks to the intake/prescription/fulfillment backend directly; it only links to it.
+Per-treatment telehealth intake URLs and the patient-portal login URL are **not** environment variables — they live in `config/treatments.ts` (see that file and §4 above) so each of the 5 treatments can carry its own distinct destination from one reviewable, version-controlled location, rather than one shared base URL. No secrets, no database credentials, no payment keys — this app never talks to the intake/prescription/fulfillment backend directly; it only links to it.
 
 ## 8. Repository layout (proposed)
 ```
@@ -144,7 +144,8 @@ app/
 content/            # typed data + MDX per §3
 components/         # per §4
 lib/                # schema builders (JSON-LD), formatting helpers, content loaders
-public/
+config/             # treatments.ts — centralized treatment/telehealth routing (already scaffolded)
+public/             # brand assets, images, fonts (already scaffolded — see public/*/README.md)
 ```
 
 This directly satisfies the sitemap's route table, keeps category/product pages on shared dynamic segments (`[product]`) backed by the typed content model, and gives every route a natural place to hang its own `generateMetadata`/JSON-LD per `ONLYHUMAN-SEO-GEO-PLAN.md`.
