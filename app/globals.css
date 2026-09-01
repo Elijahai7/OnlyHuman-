@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   OnlyHuman design tokens
+   ==========================================================================
+   Structure and mechanism are carried over from the measured Good Life Meds
+   system documented in GOODLIFE-DESIGN-SYSTEM.md — a small set of custom
+   properties that the whole type/spacing/radius system derives from, with
+   two override tiers (<=991px, <=479px) rather than per-component media
+   queries. See that document for the exact measured values this is built
+   from.
+
+   VALUES ARE ONLYHUMAN'S OWN, NOT GOOD LIFE'S:
+   - Neutrals below are a placeholder warm off-white/off-black pairing
+     (same *principle* as the reference — no pure black, no pure white —
+     but not GLM's literal hex values). Swap for OnlyHuman's official
+     palette when supplied; every consumer reads the --theme-* variables
+     below, so a palette change is a one-file edit.
+   - The two category accents are derived from the actual approved OnlyHuman
+     product renders (sampled background pixels), not invented and not
+     copied from Good Life's palette.
+
+   Raw source values live under plain (non-namespaced) names; the `@theme
+   inline` block below maps them into Tailwind's reserved color, font, and
+   radius namespaces so utilities like bg-background, text-ink,
+   font-label, rounded-regular are generated from them. The two groups
+   intentionally use different variable names — reusing a Tailwind
+   namespace name as its own source would make the custom property
+   reference itself.
+   ========================================================================== */
+
+:root {
+  /* ---- Neutrals (placeholder — pending OnlyHuman's official brand palette) ---- */
+  --raw-background: #faf9f4; /* warm off-white, page background */
+  --raw-surface: #f3f1e9; /* slightly deeper warm surface */
+  --raw-ink: #201f1c; /* warm near-black, primary text */
+  --raw-ink-muted: #55534c; /* warm dark grey, secondary/body text */
+  --raw-border: #dbd9d2; /* hairline borders, dividers */
+  --raw-surface-dark: #26251f; /* primary button fill / dark sections */
+
+  /* ---- Category accents (sampled from approved product renders) ---- */
+  --raw-weight-loss: #566547; /* deep olive/sage green */
+  --raw-weight-loss-tint: #edede6;
+  --raw-daily-wellness: #7f6455; /* warm champagne/taupe */
+  --raw-daily-wellness-tint: #f0ede7;
+
+  /* ---- Spacing scale (desktop tier; rem-based, matches measured ratio) ---- */
+  --raw-space-xxs: 0.8rem;
+  --raw-space-base: 1.5rem;
+  --raw-space-xs: 1.75rem;
+  --raw-space-s: 3.5rem;
+  --raw-space-m: 5rem;
+  --raw-space-l: 8rem;
+  --raw-space-xl: 15rem;
+  --raw-space-xxl: 22rem;
+
+  /* ---- Radius ---- */
+  --raw-radius-button: 0.15rem; /* near-square, deliberate */
+  --raw-radius-regular: 0.6rem; /* cards, product tiles, dropdown panels */
+  --raw-radius-small: 0px;
+  --raw-radius-pill: 200rem; /* badges only */
+
+  /* ---- Fluid type scale (desktop tier) ---- */
+  --fs-display: 8.5vw;
+  --fs-h1: 6vw;
+  --fs-h2: 5vw;
+  --fs-h3: 3.5rem;
+  --fs-h4: 2.8rem;
+  --fs-h5: 1.4rem;
+  --fs-h6: 1.3rem;
+  --fs-body: 1rem;
+  --fs-body-lg: 1.125rem;
+  --fs-eyebrow: 0.6rem;
+
+  /* ---- Container ---- */
+  --container-max: 80rem; /* 1280px, matches GLM's measured .container-2 */
+
+  /* ---- Fonts (see layout.tsx for next/font wiring) ----
+     Placeholder pairing pending OnlyHuman's licensed typefaces — see
+     public/fonts/README.md. Swapping the licensed files in later only
+     requires updating layout.tsx's font loaders; every component
+     consumes the --theme-font-* variables below, never a hardcoded
+     font-family. */
+  --raw-font-heading: var(--font-sans-placeholder), "Segoe UI", Arial, sans-serif;
+  --raw-font-body: var(--font-sans-placeholder), "Segoe UI", Arial, sans-serif;
+  --raw-font-label: var(--font-mono-placeholder), "SFMono-Regular", Consolas, monospace;
+}
+
+/* Tablet tier — spacing compresses to fixed px (not just scaled down),
+   matching the measured system's mobile compression behavior. */
+@media screen and (max-width: 991px) {
+  :root {
+    --raw-space-xxs: 10px;
+    --raw-space-base: 15px;
+    --raw-space-xs: 20px;
+    --raw-space-s: 40px;
+    --raw-space-m: 60px;
+    --raw-space-l: 80px;
+    --raw-space-xl: 120px;
+    --raw-space-xxl: 180px;
+
+    --fs-display: 10vw;
+    --fs-h1: 6vw;
+    --fs-h2: 7vw;
+  }
+}
+
+/* Small mobile tier — headline sizes stay viewport-fluid (larger
+   multiplier to stay legible), body/label sizes lock to fixed px. */
+@media screen and (max-width: 479px) {
+  :root {
+    --fs-display: 12vw;
+    --fs-h1: 12vw;
+    --fs-h2: 11vw;
+    --fs-h3: 9.5vw;
+    --fs-h4: 25px;
+    --fs-h5: 22px;
+    --fs-h6: 18px;
+    --fs-body: 15px;
+    --fs-eyebrow: 12px;
+  }
+}
+
+/* Bridge the raw tokens into Tailwind's utility namespace, so classes
+   like bg-background, text-ink, rounded-regular, font-label, and
+   spacing-base are generated and usable throughout the app. */
+@theme inline {
+  --color-background: var(--raw-background);
+  --color-surface: var(--raw-surface);
+  --color-surface-dark: var(--raw-surface-dark);
+  --color-ink: var(--raw-ink);
+  --color-ink-muted: var(--raw-ink-muted);
+  --color-border: var(--raw-border);
+  --color-weight-loss: var(--raw-weight-loss);
+  --color-weight-loss-tint: var(--raw-weight-loss-tint);
+  --color-daily-wellness: var(--raw-daily-wellness);
+  --color-daily-wellness-tint: var(--raw-daily-wellness-tint);
+
+  --radius-button: var(--raw-radius-button);
+  --radius-regular: var(--raw-radius-regular);
+  --radius-small: var(--raw-radius-small);
+  --radius-pill: var(--raw-radius-pill);
+
+  --spacing-xxs: var(--raw-space-xxs);
+  --spacing-base: var(--raw-space-base);
+  --spacing-xs: var(--raw-space-xs);
+  --spacing-s: var(--raw-space-s);
+  --spacing-m: var(--raw-space-m);
+  --spacing-l: var(--raw-space-l);
+  --spacing-xl: var(--raw-space-xl);
+  --spacing-xxl: var(--raw-space-xxl);
+
+  --font-heading: var(--raw-font-heading);
+  --font-body: var(--raw-font-body);
+  --font-label: var(--raw-font-label);
+}
+
+/* ==========================================================================
+   Base element styles
+   ========================================================================== */
+
+/* Element defaults live in Tailwind's "base" cascade layer, same as
+   Tailwind's own preflight. This matters, not just style: an unlayered
+   rule always beats a layered one regardless of specificity, so without
+   @layer here no utility class (text-lg, text-white, etc.) could ever
+   override h1-h6/body below — every component would need one-off inline
+   styles instead of ordinary utility overrides. */
+@layer base {
+  *, *::before, *::after {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: 1.4;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: var(--fs-h1);
+    line-height: 0.9;
+    letter-spacing: -0.2vw;
+  }
+
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: 0.95;
+    letter-spacing: -0.1vw;
+  }
+
+  h3 {
+    font-size: var(--fs-h3);
+    line-height: 1;
+    letter-spacing: -0.06rem;
+  }
+
+  h4 {
+    font-size: var(--fs-h4);
+    line-height: 1;
+    letter-spacing: -0.05rem;
+  }
+
+  h5 {
+    font-size: var(--fs-h5);
+    line-height: 1.1;
+    letter-spacing: -0.02rem;
+  }
+
+  h6 {
+    font-size: var(--fs-h6);
+    line-height: 1.1;
+    letter-spacing: -0.01rem;
+  }
+
+  /* Visible, non-suppressed focus state everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .text-display {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: var(--fs-display);
+    line-height: 0.9;
+    letter-spacing: -0.2vw;
+  }
+
+  .text-eyebrow {
+    font-family: var(--font-label);
+    font-size: var(--fs-eyebrow);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--spacing-base);
+  }
+}
+
+/* Respect reduced-motion preference site-wide. Left unlayered/!important
+   on purpose — this accessibility guarantee should not be overridable by
+   any utility class. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
