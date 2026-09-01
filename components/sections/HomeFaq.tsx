@@ -1,4 +1,5 @@
 import { Accordion } from "@/components/ui/Accordion";
+import { Reveal } from "@/components/ui/Reveal";
 import { SITE_TAGLINE } from "@/lib/site-config";
 
 /**
@@ -54,13 +55,15 @@ const FAQ_ITEMS = [
 
 export function HomeFaq() {
   return (
-    <section className="border-t border-border py-16 max-md:py-10">
-      <div className="container max-w-2xl">
-        <h2 className="text-3xl max-md:text-2xl">Frequently asked questions</h2>
-        <div className="mt-8">
-          <Accordion items={FAQ_ITEMS} allowMultiple />
+    <section className="border-t border-border py-[var(--spacing-l)]">
+      <Reveal>
+        <div className="container max-w-2xl">
+          <h2>Frequently asked questions</h2>
+          <div className="mt-8">
+            <Accordion items={FAQ_ITEMS} allowMultiple />
+          </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

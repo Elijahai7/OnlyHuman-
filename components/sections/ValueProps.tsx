@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/ui/Reveal";
+
 const VALUE_PROPS = [
   {
     title: "Provider-reviewed",
@@ -25,15 +27,17 @@ const VALUE_PROPS = [
  */
 export function ValueProps() {
   return (
-    <section className="border-y border-border bg-surface py-16 max-md:py-10">
-      <div className="container grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        {VALUE_PROPS.map((item) => (
-          <div key={item.title}>
-            <h3 className="text-lg">{item.title}</h3>
-            <p className="mt-2 text-sm text-ink-muted">{item.body}</p>
-          </div>
-        ))}
-      </div>
+    <section className="border-y border-border bg-surface py-[var(--spacing-l)]">
+      <Reveal>
+        <div className="container grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {VALUE_PROPS.map((item) => (
+            <div key={item.title}>
+              <h3 className="text-lg">{item.title}</h3>
+              <p className="mt-2 text-sm text-ink-muted">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }

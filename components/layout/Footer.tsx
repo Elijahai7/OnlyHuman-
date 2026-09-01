@@ -24,7 +24,7 @@ const LEGAL_LINKS = [
 export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
-      <div className="container py-16 max-md:py-10">
+      <div className="container py-[var(--spacing-l)]">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
           <div>
             <h2 className="text-eyebrow mb-4 text-ink-muted">Categories</h2>

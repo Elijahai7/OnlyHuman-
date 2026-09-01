@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/ui/Reveal";
+
 const STEPS = [
   {
     number: "01",
@@ -25,19 +27,21 @@ const STEPS = [
  */
 export function HowItWorks() {
   return (
-    <section className="py-16 max-md:py-10">
-      <div className="container">
-        <h2 className="max-w-xl text-3xl max-md:text-2xl">How it works</h2>
-        <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
-          {STEPS.map((step) => (
-            <div key={step.number}>
-              <p className="text-eyebrow text-ink-muted">{step.number}</p>
-              <h3 className="mt-3 text-lg">{step.title}</h3>
-              <p className="mt-2 text-sm text-ink-muted">{step.body}</p>
-            </div>
-          ))}
+    <section className="py-[var(--spacing-l)]">
+      <Reveal>
+        <div className="container">
+          <h2 className="max-w-xl">How it works</h2>
+          <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+            {STEPS.map((step) => (
+              <div key={step.number}>
+                <p className="text-eyebrow text-ink-muted">{step.number}</p>
+                <h3 className="mt-3 text-lg">{step.title}</h3>
+                <p className="mt-2 text-sm text-ink-muted">{step.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

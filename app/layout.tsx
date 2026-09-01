@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/site-config";
 import { jsonLdScriptProps, organizationJsonLd, websiteJsonLd } from "@/lib/structured-data";
 
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#faf9f4",
+  themeColor: "#fffef8",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -57,9 +58,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-screen flex-col antialiased">
         <script {...jsonLdScriptProps(organizationJsonLd())} />
         <script {...jsonLdScriptProps(websiteJsonLd())} />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <SmoothScroll>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

@@ -10,15 +10,20 @@
    queries. See that document for the exact measured values this is built
    from.
 
-   VALUES ARE ONLYHUMAN'S OWN, NOT GOOD LIFE'S:
-   - Neutrals below are a placeholder warm off-white/off-black pairing
-     (same *principle* as the reference — no pure black, no pure white —
-     but not GLM's literal hex values). Swap for OnlyHuman's official
-     palette when supplied; every consumer reads the --theme-* variables
-     below, so a palette change is a one-file edit.
-   - The two category accents are derived from the actual approved OnlyHuman
-     product renders (sampled background pixels), not invented and not
-     copied from Good Life's palette.
+   COLOR SOURCING:
+   - Neutrals (background/surface/ink/border/dark-surface) are matched to
+     Good Life Meds' measured tonal values as closely as possible, per
+     explicit direction: the goal is the same visual logic and tonal
+     relationships, not a divergent "OnlyHuman palette." These are
+     generic neutral tones (a cream, a warm off-black, a mid grey), not
+     a Good Life brand mark — reuse here is intentional, not incidental.
+     Every consumer reads the theme color variables below, so replacing
+     these with an official OnlyHuman-specific neutral set later (if the
+     founder ever wants to diverge) is still a one-file change.
+   - The two category accents (weight-loss green, daily-wellness
+     champagne/taupe) are sampled from the actual approved OnlyHuman
+     product renders — OnlyHuman's own, not Good Life's — and stay
+     subtle/category-scoped rather than reshaping the overall neutral UI.
 
    Raw source values live under plain (non-namespaced) names; the `@theme
    inline` block below maps them into Tailwind's reserved color, font, and
@@ -30,19 +35,28 @@
    ========================================================================== */
 
 :root {
-  /* ---- Neutrals (placeholder — pending OnlyHuman's official brand palette) ---- */
-  --raw-background: #faf9f4; /* warm off-white, page background */
-  --raw-surface: #f3f1e9; /* slightly deeper warm surface */
-  --raw-ink: #201f1c; /* warm near-black, primary text */
-  --raw-ink-muted: #55534c; /* warm dark grey, secondary/body text */
-  --raw-border: #dbd9d2; /* hairline borders, dividers */
-  --raw-surface-dark: #26251f; /* primary button fill / dark sections */
+  /* ---- Neutrals ----
+     Matched to the measured Good Life Meds tonal system (GOODLIFE-
+     DESIGN-SYSTEM.md §1) as closely as possible per the founder's
+     direction: same cream background, same warm off-black text, same
+     warm mid-grey secondary text, same hairline stroke grey, same dark
+     charcoal button/section fill. These are generic neutral tones, not
+     GLM brand marks — reusing the same tonal logic is the explicit goal,
+     not a coincidence to avoid. Swap for OnlyHuman's own confirmed
+     values only if/when the founder supplies a distinct official
+     palette that intentionally departs from this. */
+  --raw-background: #fffef8; /* cream */
+  --raw-surface: #f8f7f0; /* dark-cream */
+  --raw-ink: #222222; /* heading grey */
+  --raw-ink-muted: #54514a; /* body grey */
+  --raw-border: #d6d6d6; /* stroke grey */
+  --raw-surface-dark: #323232; /* grey — primary button fill / dark sections */
 
   /* ---- Category accents (sampled from approved product renders) ---- */
   --raw-weight-loss: #566547; /* deep olive/sage green */
-  --raw-weight-loss-tint: #edede6;
+  --raw-weight-loss-tint: #f1f2ea;
   --raw-daily-wellness: #7f6455; /* warm champagne/taupe */
-  --raw-daily-wellness-tint: #f0ede7;
+  --raw-daily-wellness-tint: #f5f2eb;
 
   /* ---- Spacing scale (desktop tier; rem-based, matches measured ratio) ---- */
   --raw-space-xxs: 0.8rem;

@@ -12,16 +12,22 @@ const SECONDARY_LINKS = [
 
 /**
  * Sticky, translucent header matching the measured Good Life Meds header
- * (GOODLIFE-DESIGN-SYSTEM.md §5 / GOODLIFE-INTERACTION-AUDIT.md §2):
- * a blurred glass panel, ~4.2rem tall on desktop, with a mega-menu per
- * category. The desktop dropdown needs no client JS — it opens on
- * `:hover` or `:focus-within`, so it's keyboard-accessible (tab into any
- * link inside opens it, tabbing out closes it) without a toggle handler.
+ * (GOODLIFE-DESIGN-SYSTEM.md §5 / GOODLIFE-INTERACTION-AUDIT.md §2): the
+ * whole sticky area is exactly 4.2rem tall on desktop, inset from the top
+ * by the same --spacing-xxs used elsewhere in the system, with the
+ * visible glass bar filling the *remaining* height — so it reads as a
+ * slim floating pill, not a full 4.2rem-tall block. On mobile the inset
+ * collapses entirely (auto height, no top offset), matching the
+ * reference's own mobile behavior.
+ *
+ * The desktop dropdown needs no client JS — it opens on `:hover` or
+ * `:focus-within`, so it's keyboard-accessible (tab into any link inside
+ * opens it, tabbing out closes it) without a toggle handler.
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full px-2 pt-2 sm:px-4">
-      <div className="container mx-auto flex h-[4.2rem] items-center justify-between rounded-[0.2rem] border border-border/60 bg-background/75 px-4 backdrop-blur-[50px] max-md:h-auto max-md:py-3">
+    <header className="sticky top-0 z-50 flex h-[4.2rem] w-full flex-col items-center px-2 pt-[var(--spacing-xxs)] max-md:h-auto max-md:pt-0 sm:px-4">
+      <div className="container mx-auto flex h-full min-h-0 flex-1 items-center justify-between rounded-[0.2rem] border border-border/60 bg-background/75 px-4 backdrop-blur-[50px] max-md:h-auto max-md:flex-none max-md:py-3">
         <Link href="/" className="flex-shrink-0" aria-label="OnlyHuman home">
           <Image
             src="/brand/logo/onlyhuman-logo-transparent.png"
@@ -33,7 +39,7 @@ export function Header() {
           />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-2 md:flex lg:gap-6">
           {CATEGORY_LIST.map((category) => (
             <div key={category.slug} className="group relative">
               <Link

@@ -21,7 +21,7 @@ export function ProductCard({ product, category, className }: ProductCardProps) 
   return (
     <div
       className={cn(
-        "flex w-72 flex-shrink-0 flex-col overflow-hidden rounded-regular bg-background snap-start",
+        "flex w-72 flex-shrink-0 flex-col overflow-hidden rounded-regular bg-background",
         className
       )}
     >
@@ -36,6 +36,7 @@ export function ProductCard({ product, category, className }: ProductCardProps) 
           src={product.heroImageSrc}
           alt={product.heroImageAlt}
           fill
+          draggable={false}
           sizes="(min-width: 768px) 288px, 70vw"
           className="object-cover"
         />

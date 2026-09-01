@@ -9,6 +9,7 @@ import { PRODUCTS } from "@/content/products";
 import { Accordion } from "@/components/ui/Accordion";
 import { PortalLoginLink } from "@/components/ui/TreatmentCTA";
 import { cn } from "@/lib/cn";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 const SECONDARY_LINKS = [
   { label: "How It Works", href: "/how-it-works" },
@@ -23,11 +24,7 @@ const SECONDARY_LINKS = [
  */
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHasMounted();
 
   // Lock body scroll while the drawer is open.
   useEffect(() => {
